@@ -1,6 +1,7 @@
 import os
 import sys
 
+import mysql.connector
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
@@ -41,7 +42,6 @@ if ITFLOW_DB_PASSWORD == 'none':
 app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+mysqlconnector:///{ITFLOW_DB_USER}:{ITFLOW_DB_PASSWORD}@{ITFLOW_DB_URI}:{ITFLOW_DB_PORT}/{ITFLOW_DB_NAME}'
 app.config['ITFLOW_API_KEY'] = ITFLOW_API_KEY
 
-db = SQLAlchemy(app)
 
 @app.route('/ping', methods=['GET'])
 def ping():  # put application's code here
@@ -63,14 +63,19 @@ def create_ticket_reply():
     ticket_reply_time_worked = '00:00:00'
     ticket_reply_type = 'Internal'
 
-    with db.engine.connect() as conn:
-        reply_id = conn.execute(f"INSERT INTO ticket_replies SET ticket_reply = '{ticket_reply}', ticket_reply_type = '{ticket_reply_type}', ticket_reply_time_worked = '{ticket_reply_time_worked}', ticket_reply_by = {ticket_reply_by}, ticket_reply_ticket_id = {ticket_reply_ticket_id};")
+    conn = mysql.connector.connect(
+        host=ITFLOW_DB_URI,
+        port=ITFLOW_DB_PORT,
+        user=ITFLOW_DB_USER,
+        password=ITFLOW_DB_PASSWORD,
+        database=ITFLOW_DB_NAME
+    )
 
-        response = {
-            'Reply ID': reply_id,
-        }
+    cursor = conn.cursor()
+    cursor.execute(f"INSERT INTO ticket_replies SET ticket_reply = '{ticket_reply}', ticket_reply_type = '{ticket_reply_type}', ticket_reply_time_worked = '{ticket_reply_time_worked}', ticket_reply_by = {ticket_reply_by}, ticket_reply_ticket_id = {ticket_reply_ticket_id};")
 
-    return jsonify(response)
+    row = cursor.fetchone()
+    return jsonify(row)
 
 @app.route('/ticket_categories', methods=['POST'])
 def add_ticket_category():
@@ -84,21 +89,34 @@ def add_ticket_category():
     category_id = json['category_id']
     ticket_id = json['ticket_id']
 
-    with db.engine.connect() as conn:
-        conn.execute(f"UPDATE tickets SET ticket_category = {category_id} WHERE ticket_id = {ticket_id}")
+    conn = mysql.connector.connect(
+        host=ITFLOW_DB_URI,
+        port=ITFLOW_DB_PORT,
+        user=ITFLOW_DB_USER,
+        password=ITFLOW_DB_PASSWORD,
+        database=ITFLOW_DB_NAME
+    )
+
+    cursor = conn.cursor()
+    cursor.execute(f"UPDATE tickets SET ticket_category = {category_id} WHERE ticket_id = {ticket_id}")
+
 
 @app.route('/ticket_categories', methods=['GET'])
 def get_ticket_categories():
     # Required filter: SELECT category_id, category_name FROM categories WHERE category_type = 'Ticket' AND category_archived_at IS NULL ORDER BY category_name ASC
-    with db.engine.connect() as conn:
-        result = conn.execute("SELECT category_id, category_name FROM categories WHERE category_type = 'Ticket' AND category_archived IS NULL ORDER BY category_name ASC")
+    conn = mysql.connector.connect(
+        host=ITFLOW_DB_URI,
+        port=ITFLOW_DB_PORT,
+        user=ITFLOW_DB_USER,
+        password=ITFLOW_DB_PASSWORD,
+        database=ITFLOW_DB_NAME
+    )
 
-        response = {
-            f'Record {i}': list(row)
-            for i, row in enumerate(result, start=1)
-        }
+    cursor = conn.cursor()
+    cursor.execute("SELECT category_id, category_name FROM categories WHERE category_type = 'Ticket' AND category_archived IS NULL ORDER BY category_name ASC")
 
-    return jsonify(response)
+    result = cursor.fetchall()
+    return jsonify(result)
 
 @app.route('/categories', methods=['POST'])
 def create_category():
@@ -115,12 +133,21 @@ def create_category():
     description = json['description']
     color = json['color']
 
-    with db.engine.connect() as conn:
-        category_id = conn.execute(f"INSERT INTO categories SET category_name = '{category}', category_description = '{description}', category_type = 'Ticket', category_color = '{color}'")
+    conn = mysql.connector.connect(
+        host=ITFLOW_DB_URI,
+        port=ITFLOW_DB_PORT,
+        user=ITFLOW_DB_USER,
+        password=ITFLOW_DB_PASSWORD,
+        database=ITFLOW_DB_NAME
+    )
 
-        response = jsonify(category_id)
+    cursor = conn.cursor()
+    cursor.execute(f"INSERT INTO categories SET category_name = '{category}', category_description = '{description}', category_type = 'Ticket', category_color = '{color}'")
 
-    return response
+    category_id = cursor.fetchone()
+
+    return jsonify(category_id)
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=7000, debug=True)
