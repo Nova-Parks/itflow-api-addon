@@ -143,6 +143,8 @@ def create_category():
     description = json['description']
     color = json['color']
 
+    app.logger.info(f"Category: {category}, Description: {description}, Color: {color}")
+
     conn = mysql.connector.connect(
         host=ITFLOW_DB_URI,
         port=ITFLOW_DB_PORT,
@@ -152,7 +154,7 @@ def create_category():
     )
 
     cursor = conn.cursor()
-    cursor.execute(f"INSERT INTO categories SET category_name = '{category}', category_description = '{description}', category_type = 'Ticket', category_color = '{color}'")
+    cursor.execute(f'INSERT INTO categories SET category_name = \'{category}\', category_description = \'{description}\', category_type = \'Ticket\', category_color = \'{color}\'')
 
     category_id = cursor.fetchone()
 
