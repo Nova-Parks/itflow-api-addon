@@ -113,7 +113,7 @@ def get_ticket_categories():
     )
 
     cursor = conn.cursor()
-    cursor.execute("SELECT category_id, category_name FROM categories WHERE category_type = 'Ticket' AND category_archived IS NULL ORDER BY category_name ASC")
+    cursor.execute("SELECT category_id, category_name FROM categories WHERE category_type = 'Ticket' AND category_archived_at IS NULL ORDER BY category_name ASC")
 
     result = cursor.fetchall()
     return jsonify(result)
