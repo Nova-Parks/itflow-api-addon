@@ -137,7 +137,7 @@ def create_category():
     # }
     json = request.json
 
-    print(json)
+    print(f"request body: {json}")
 
     category = f'{json['category']} - {json['subcategory']}'
     description = json['description']
@@ -160,4 +160,5 @@ def create_category():
 
 
 if __name__ == '__main__':
+    print("start")
     app.run(host='0.0.0.0', port=7000, debug=True)
