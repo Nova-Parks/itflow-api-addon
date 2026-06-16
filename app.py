@@ -137,6 +137,8 @@ def create_category():
     # }
     json = request.json
 
+    print(json)
+
     category = f'{json['category']} - {json['subcategory']}'
     description = json['description']
     color = json['color']
