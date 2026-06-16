@@ -73,7 +73,7 @@ def create_ticket_reply():
     )
 
     cursor = conn.cursor()
-    cursor.execute(f"INSERT INTO ticket_replies SET ticket_reply = '{ticket_reply}', ticket_reply_type = '{ticket_reply_type}', ticket_reply_time_worked = '{ticket_reply_time_worked}', ticket_reply_by = {ticket_reply_by}, ticket_reply_ticket_id = {ticket_reply_ticket_id};")
+    cursor.execute(f"INSERT INTO ticket_replies SET ticket_reply = '{ticket_reply}', ticket_reply_type = '{ticket_reply_type}', ticket_reply_time_worked = '{ticket_reply_time_worked}', ticket_reply_by = {ticket_reply_by}, ticket_reply_ticket_id = {ticket_reply_ticket_id}")
     conn.commit()
 
     row = cursor.fetchone()
