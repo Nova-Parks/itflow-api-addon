@@ -115,8 +115,14 @@ def get_ticket_categories():
     cursor = conn.cursor()
     cursor.execute("SELECT category_id, category_name FROM categories WHERE category_type = 'Ticket' AND category_archived_at IS NULL ORDER BY category_name ASC")
 
-    result = cursor.fetchall()
-    return jsonify(result)
+    response = []
+    for result in cursor.fetchall():
+        category_id = result[0]
+        category_name = result[1]
+
+        response.append({'category_id': category_id, 'category_name': category_name})
+
+    return jsonify(response)
 
 @app.route('/categories', methods=['POST'])
 def create_category():
