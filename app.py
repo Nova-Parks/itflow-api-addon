@@ -155,9 +155,10 @@ def create_category():
 
     cursor = conn.cursor()
     cursor.execute(f"INSERT INTO categories SET category_name = 'Applications', category_description = 'test desc', category_type = 'Ticket', category_color = '#000000'")
-
+    conn.commit()
     category_id = cursor.fetchone()
 
+    conn.close()
     return jsonify(category_id)
 
 
