@@ -137,7 +137,7 @@ def create_category():
     # }
     json = request.json
 
-    print(f"request body: {json}")
+    app.logger.info(f"request body: {json}")
 
     category = f'{json['category']} - {json['subcategory']}'
     description = json['description']
