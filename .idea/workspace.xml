@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="090e428f-6ad6-4504-b1dd-aa9dea0eeba6" name="Changes" comment="fixed GET /ticket_categories">
+    <list default="true" id="090e428f-6ad6-4504-b1dd-aa9dea0eeba6" name="Changes" comment="Tweaked get category output result">
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -91,7 +91,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1781548781477</updated>
-      <workItem from="1781548782490" duration="18326000" />
+      <workItem from="1781548782490" duration="18719000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <option name="closed" value="true" />
@@ -173,7 +173,15 @@
       <option name="project" value="LOCAL" />
       <updated>1781625288171</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Tweaked get category output result">
+      <option name="closed" value="true" />
+      <created>1781626284850</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1781626284850</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -187,7 +195,8 @@
     <MESSAGE value="moved to mysql-connector-python for simpler query handling" />
     <MESSAGE value="oops I didn't uninstall the old sql engine" />
     <MESSAGE value="fixed GET /ticket_categories" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed GET /ticket_categories" />
+    <MESSAGE value="Tweaked get category output result" />
+    <option name="LAST_COMMIT_MESSAGE" value="Tweaked get category output result" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/itflow_api_addon$itflow_api_addon.coverage" NAME="itflow-api-addon Coverage Results" MODIFIED="1781624952817" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
