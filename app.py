@@ -1,10 +1,8 @@
-import http.client
 import os
 import sys
 
 import mysql.connector
 from flask import Flask, request, jsonify
-from flask_sqlalchemy import SQLAlchemy
 
 ITFLOW_API_KEY = ''
 ITFLOW_DB_URI = ''
@@ -39,10 +37,6 @@ if ITFLOW_DB_USER == 'none':
 ITFLOW_DB_PASSWORD = os.getenv('ITFLOW_DB_PASSWORD') or 'none'
 if ITFLOW_DB_PASSWORD == 'none':
     sys.exit('Error: ITFLOW_DB_PASSWORD not provided.')
-
-app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+mysqlconnector:///{ITFLOW_DB_USER}:{ITFLOW_DB_PASSWORD}@{ITFLOW_DB_URI}:{ITFLOW_DB_PORT}/{ITFLOW_DB_NAME}'
-app.config['ITFLOW_API_KEY'] = ITFLOW_API_KEY
-
 
 @app.route('/ping', methods=['GET'])
 def ping():  # put application's code here
@@ -151,8 +145,6 @@ def create_category():
     description = json['description']
     color = json['color']
 
-    app.logger.info(f"Category: {category}, Description: {description}, Color: {color}")
-
     conn = mysql.connector.connect(
         host=ITFLOW_DB_URI,
         port=ITFLOW_DB_PORT,
@@ -164,12 +156,10 @@ def create_category():
     cursor = conn.cursor()
     cursor.execute(f"INSERT INTO categories SET category_name = '{category}', category_description = '{description}', category_type = 'Ticket', category_color = '{color}'")
     conn.commit()
-    # TODO: Return the created category_id
     conn.close()
 
     return "done"
 
 
 if __name__ == '__main__':
-    print("start")
     app.run(host='0.0.0.0', port=7000, debug=True)
