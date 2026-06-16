@@ -154,7 +154,7 @@ def create_category():
     )
 
     cursor = conn.cursor()
-    cursor.execute(f'INSERT INTO categories SET category_name = \'{category}\', category_description = \'{description}\', category_type = \'Ticket\', category_color = \'{color}\'')
+    cursor.execute(f"INSERT INTO categories SET category_name = 'Applications', category_description = 'test desc', category_type = 'Ticket', category_color = '#000000'")
 
     category_id = cursor.fetchone()
 
