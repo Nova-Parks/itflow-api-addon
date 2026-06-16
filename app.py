@@ -38,9 +38,11 @@ ITFLOW_DB_PASSWORD = os.getenv('ITFLOW_DB_PASSWORD') or 'none'
 if ITFLOW_DB_PASSWORD == 'none':
     sys.exit('Error: ITFLOW_DB_PASSWORD not provided.')
 
+
 @app.route('/ping', methods=['GET'])
 def ping():  # put application's code here
     return 'Pong!'
+
 
 @app.route('/ticket_replies', methods=['POST'])
 def create_ticket_reply():
@@ -68,12 +70,14 @@ def create_ticket_reply():
     )
 
     cursor = conn.cursor()
-    cursor.execute(f"INSERT INTO ticket_replies SET ticket_reply = '{ticket_reply}', ticket_reply_type = '{ticket_reply_type}', ticket_reply_time_worked = '{ticket_reply_time_worked}', ticket_reply_by = {ticket_reply_by}, ticket_reply_ticket_id = {ticket_reply_ticket_id}")
+    cursor.execute(
+        f"INSERT INTO ticket_replies SET ticket_reply = '{ticket_reply}', ticket_reply_type = '{ticket_reply_type}', ticket_reply_time_worked = '{ticket_reply_time_worked}', ticket_reply_by = {ticket_reply_by}, ticket_reply_ticket_id = {ticket_reply_ticket_id}")
     conn.commit()
 
     row = cursor.fetchone()
     conn.close()
     return jsonify(row)
+
 
 @app.route('/ticket_categories', methods=['POST'])
 def add_ticket_category():
@@ -114,7 +118,8 @@ def get_ticket_categories():
     )
 
     cursor = conn.cursor()
-    cursor.execute("SELECT category_id, category_name, category_color, category_type FROM categories WHERE category_type = 'Ticket' AND category_archived_at IS NULL ORDER BY category_name ASC")
+    cursor.execute(
+        "SELECT category_id, category_name, category_color, category_type FROM categories WHERE category_type = 'Ticket' AND category_archived_at IS NULL ORDER BY category_name ASC")
 
     response = []
     for result in cursor.fetchall():
@@ -123,10 +128,12 @@ def get_ticket_categories():
         category_color = result[2]
         category_type = result[3]
 
-        response.append({'category_id': category_id, 'category_name': category_name, 'category_color': category_color, 'category_type': category_type})
+        response.append({'category_id': category_id, 'category_name': category_name, 'category_color': category_color,
+                         'category_type': category_type})
 
     conn.close()
     return jsonify(response)
+
 
 @app.route('/categories', methods=['POST'])
 def create_category():
@@ -154,7 +161,8 @@ def create_category():
     )
 
     cursor = conn.cursor()
-    cursor.execute(f"INSERT INTO categories SET category_name = '{category}', category_description = '{description}', category_type = 'Ticket', category_color = '{color}'")
+    cursor.execute(
+        f"INSERT INTO categories SET category_name = '{category}', category_description = '{description}', category_type = 'Ticket', category_color = '{color}'")
     conn.commit()
     conn.close()
 
