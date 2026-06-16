@@ -8,7 +8,7 @@ I do at some point plan to implement this in ITFlow directly through PRs using t
 
 eh /shrug
 
-## !! This is not a secure REST API. There is no authentication. At all. It exposes the ITFlow database and is designed to be used as a helper for a one-time data import !!
+## !! This is not a secure REST API. There is no authentication. At all. It exposes the ITFlow database and is designed to be used as a helper (on an internal network) for a one-time data import !!
 
 endpoints configured:
 
