@@ -38,7 +38,7 @@ ITFLOW_DB_PASSWORD = os.getenv('ITFLOW_DB_PASSWORD') or 'none'
 if ITFLOW_DB_PASSWORD == 'none':
     sys.exit('Error: ITFLOW_DB_PASSWORD not provided.')
 
-app.config['SQLALCHEMY_DATABASE_URI'] = f'mariadb+mariadbconnector:///{ITFLOW_DB_USER}:{ITFLOW_DB_PASSWORD}@{ITFLOW_DB_URI}:{ITFLOW_DB_PORT}/{ITFLOW_DB_NAME}'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+mysqldb:///{ITFLOW_DB_USER}:{ITFLOW_DB_PASSWORD}@{ITFLOW_DB_URI}:{ITFLOW_DB_PORT}/{ITFLOW_DB_NAME}'
 app.config['ITFLOW_API_KEY'] = ITFLOW_API_KEY
 
 db = SQLAlchemy(app)
