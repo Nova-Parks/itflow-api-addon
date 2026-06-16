@@ -105,7 +105,7 @@ def add_ticket_category():
     conn.commit()
     conn.close()
 
-    return http.client.OK
+    return "done"
 
 
 @app.route('/ticket_categories', methods=['GET'])
@@ -166,7 +166,7 @@ def create_category():
     # TODO: Return the created category_id
     conn.close()
 
-    return http.client.OK
+    return "done"
 
 
 if __name__ == '__main__':
