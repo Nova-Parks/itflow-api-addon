@@ -4,13 +4,6 @@ import sys
 import mysql.connector
 from flask import Flask, request, jsonify
 
-ITFLOW_API_KEY = ''
-ITFLOW_DB_URI = ''
-ITFLOW_DB_PORT = ''
-ITFLOW_DB_NAME = ''
-ITFLOW_DB_USER = ''
-ITFLOW_DB_PASSWORD = ''
-
 app = Flask(__name__)
 
 # Check for required environment variables
