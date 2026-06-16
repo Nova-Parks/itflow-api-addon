@@ -8,6 +8,8 @@ I do at some point plan to implement this in ITFlow directly through PRs using t
 
 eh /shrug
 
+## !! This is not a secure REST API. There is no authentication. At all. It exposes the ITFlow database and is designed to be used as a helper for a one-time data import !!
+
 endpoints configured:
 
 ### GET /ping
@@ -20,6 +22,7 @@ heartbeat endpoint
 {
     ticket_reply: 'ticket reply body',
     ticket_reply_by: contact or user id,
+    ticket_reply_type: Client | Internal
     ticket_reply_ticket_id: ticket id,
 }
 ```
