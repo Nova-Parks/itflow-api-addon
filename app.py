@@ -55,6 +55,7 @@ def create_ticket_reply():
     #   ticket_reply: 'ticket reply',
     #   ticket_reply_by: contact or user id,
     #   ticket_reply_ticket_id: ticket id,
+    #   ticket_reply_type: Internal | Client
     # }
     json = request.json
 
@@ -62,7 +63,7 @@ def create_ticket_reply():
     ticket_reply_by = json['ticket_reply_by']
     ticket_reply_ticket_id = json['ticket_reply_ticket_id']
     ticket_reply_time_worked = '00:00:00'
-    ticket_reply_type = 'Internal'
+    ticket_reply_type = json['ticket_reply_type']
 
     conn = mysql.connector.connect(
         host=ITFLOW_DB_URI,
