@@ -1,3 +1,4 @@
+import http.client
 import os
 import sys
 
@@ -73,8 +74,10 @@ def create_ticket_reply():
 
     cursor = conn.cursor()
     cursor.execute(f"INSERT INTO ticket_replies SET ticket_reply = '{ticket_reply}', ticket_reply_type = '{ticket_reply_type}', ticket_reply_time_worked = '{ticket_reply_time_worked}', ticket_reply_by = {ticket_reply_by}, ticket_reply_ticket_id = {ticket_reply_ticket_id};")
+    conn.commit()
 
     row = cursor.fetchone()
+    conn.close()
     return jsonify(row)
 
 @app.route('/ticket_categories', methods=['POST'])
@@ -99,11 +102,14 @@ def add_ticket_category():
 
     cursor = conn.cursor()
     cursor.execute(f"UPDATE tickets SET ticket_category = {category_id} WHERE ticket_id = {ticket_id}")
+    conn.commit()
+    conn.close()
+
+    return http.client.OK
 
 
 @app.route('/ticket_categories', methods=['GET'])
 def get_ticket_categories():
-    # Required filter: SELECT category_id, category_name FROM categories WHERE category_type = 'Ticket' AND category_archived_at IS NULL ORDER BY category_name ASC
     conn = mysql.connector.connect(
         host=ITFLOW_DB_URI,
         port=ITFLOW_DB_PORT,
@@ -124,6 +130,7 @@ def get_ticket_categories():
 
         response.append({'category_id': category_id, 'category_name': category_name, 'category_color': category_color, 'category_type': category_type})
 
+    conn.close()
     return jsonify(response)
 
 @app.route('/categories', methods=['POST'])
@@ -156,10 +163,10 @@ def create_category():
     cursor = conn.cursor()
     cursor.execute(f"INSERT INTO categories SET category_name = '{category}', category_description = '{description}', category_type = 'Ticket', category_color = '{color}'")
     conn.commit()
-    category_id = cursor.fetchone()
-
+    # TODO: Return the created category_id
     conn.close()
-    return jsonify(category_id)
+
+    return http.client.OK
 
 
 if __name__ == '__main__':
