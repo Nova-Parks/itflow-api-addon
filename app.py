@@ -96,6 +96,30 @@ def set_ticket_status():
     conn.commit()
     conn.close()
 
+@app.route('/ticket_statuses', methods=['GET'])
+def get_ticket_statuses():
+    conn = mysql.connector.connect(
+        host=ITFLOW_DB_URI,
+        port=ITFLOW_DB_PORT,
+        user=ITFLOW_DB_USER,
+        password=ITFLOW_DB_PASSWORD,
+        database=ITFLOW_DB_NAME
+    )
+
+    cursor = conn.cursor()
+    cursor.execute('SELECT ticket_status_id, ticket_status_name FROM ticket_statuses')
+
+    response = []
+
+    for result in cursor.fetchall():
+        ticket_status_id = result[0]
+        ticket_status_name = result[1]
+
+        response.append({'ticket_status_id': ticket_status_id, 'ticket_status_name': ticket_status_name})
+
+    conn.close()
+    return jsonify(response)
+
 
 @app.route('/ticket_categories', methods=['POST'])
 def add_ticket_category():
