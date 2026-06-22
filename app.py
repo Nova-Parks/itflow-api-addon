@@ -133,7 +133,6 @@ def create_category():
     # Request Body:
     # {
     #   category: 'category',
-    #   subcategory: 'subcategory',
     #   description: 'description',
     #   color: 'color',
     # }
@@ -141,7 +140,7 @@ def create_category():
 
     app.logger.info(f"request body: {json}")
 
-    category = f'{json['category']} - {json['subcategory']}'
+    category = json['category']
     description = json['description']
     color = json['color']
 
