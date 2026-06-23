@@ -275,7 +275,7 @@ def set_creation_date():
     sql = "UPDATE tickets SET ticket_created_at = %s, ticket_updated_at = %s WHERE ticket_id = %s"
 
     cursor = conn.cursor()
-    cursor.execute(sql, (created_at, updated_at, ticket_id))
+    cursor.execute(sql, (c, u, ticket_id))
     conn.commit()
     conn.close()
 
