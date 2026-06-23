@@ -65,6 +65,11 @@ def create_ticket_reply():
 
     cursor = conn.cursor()
 
+    print(ticket_reply)
+    print(ticket_reply_by)
+    print(ticket_reply_ticket_id)
+    print(ticket_reply_type)
+
     sql = 'INSERT INTO ticket_replies (ticket_reply, ticket_reply_type, ticket_reply_time_worked, ticket_reply_by, ticket_reply_ticket_id) VALUES (%s, %s, %s, %s, %s)'
 
     cursor.execute(sql, (ticket_reply, ticket_reply_type, ticket_reply_time_worked, ticket_reply_by, ticket_reply_ticket_id))
@@ -264,8 +269,10 @@ def set_creation_date():
         database=ITFLOW_DB_NAME
     )
     fmt = '%Y-%m-%d %H:%M:%S'
-    c = datetime.datetime.strptime(created_at, fmt)
-    u = datetime.datetime.strptime(updated_at, fmt)
+    c = datetime.datetime.strptime(created_at, fmt).isoformat(' ')
+    print(c)
+    u = datetime.datetime.strptime(updated_at, fmt).isoformat(' ')
+    print(u)
     sql = "UPDATE tickets SET ticket_created_at = '%s', ticket_updated_at = '%s' WHERE ticket_id = %s"
 
     cursor = conn.cursor()
