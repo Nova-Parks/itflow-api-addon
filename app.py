@@ -266,7 +266,7 @@ def set_creation_date():
     fmt = '%Y-%m-%d %H:%M:%S'
     c = datetime.datetime.strptime(created_at, fmt)
     u = datetime.datetime.strptime(updated_at, fmt)
-    sql = 'UPDATE tickets SET ticket_created_at = %s, ticket_updated_at = %s WHERE ticket_id = %s'
+    sql = "UPDATE tickets SET ticket_created_at = '%s', ticket_updated_at = '%s' WHERE ticket_id = %s"
 
     cursor = conn.cursor()
     cursor.execute(sql, (created_at, updated_at, ticket_id))
