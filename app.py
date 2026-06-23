@@ -234,6 +234,8 @@ def close_and_resolve():
     cursor = conn.cursor()
     cursor.execute(f'UPDATE tickets SET ticket_resolved_at = NOW(), ticket_closed_at = NOW() WHERE ticket_id = {ticket_id}')
 
+    return jsonify({'success': True})
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=7000, debug=True)
