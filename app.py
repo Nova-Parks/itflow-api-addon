@@ -270,5 +270,7 @@ def set_creation_date():
     conn.commit()
     conn.close()
 
+    return jsonify({'success': 'True'})
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=7000, debug=True)
