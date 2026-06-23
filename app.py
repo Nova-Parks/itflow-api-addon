@@ -148,7 +148,8 @@ def add_ticket_category():
     )
 
     cursor = conn.cursor()
-    cursor.execute(f"UPDATE tickets SET ticket_category = {category_id} WHERE ticket_id = {ticket_id}")
+    sql = 'UPDATE tickets SET ticket_category = %s WHERE ticket_id = %s'
+    cursor.execute(sql, (category_id, ticket_id))
     conn.commit()
     conn.close()
 
@@ -233,9 +234,41 @@ def close_and_resolve():
 
     cursor = conn.cursor()
     cursor.execute(f'UPDATE tickets SET ticket_resolved_at = NOW(), ticket_closed_at = NOW() WHERE ticket_id = {ticket_id}')
+    conn.commit()
+    conn.close()
 
     return jsonify({'success': True})
 
+
+@app.route('/ticket_dates', methods=['POST'])
+def set_creation_date():
+    # Request Body:
+    # {
+    #   'ticket_id': 'ticket_id',
+    #   'created_at': 'datetime string',
+    #   'updated_at': datetime string',
+    # }
+
+    json = request.json
+
+    ticket_id = json['ticket_id']
+    created_at = json['created_at']
+    updated_at = json['updated_at']
+
+    conn = mysql.connector.connect(
+        host=ITFLOW_DB_URI,
+        port=ITFLOW_DB_PORT,
+        user=ITFLOW_DB_USER,
+        password=ITFLOW_DB_PASSWORD,
+        database=ITFLOW_DB_NAME
+    )
+
+    sql = 'UPDATE tickets SET ticket_created_at = %s, ticket_updated_at = %s WHERE ticket_id = %s'
+
+    cursor = conn.cursor()
+    cursor.execute(sql, (created_at, updated_at, ticket_id))
+    conn.commit()
+    conn.close()
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=7000, debug=True)
