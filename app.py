@@ -266,7 +266,7 @@ def set_creation_date():
     fmt = "%Y-%m-%d %H:%M:%S"
     # c = datetime.datetime.fromtimestamp(created_at).strftime(fmt)
     # c = ' '.join(str(created_at).split('T'))
-    c = datetime.strptime(created_at, '%Y-%m-%dT%H:%M:%S.%f%z').strftime('%Y-%m-%d -H:%M:%S')
+    c = datetime.strptime(created_at, '%Y-%m-%dT%H:%M:%S.%f%z').strftime('%Y-%m-%d %H:%M:%S')
     print(c)
     # u = datetime.datetime.fromtimestamp(updated_at).strftime(fmt)
     # u = ' '.join(str(updated_at).split('T'))
