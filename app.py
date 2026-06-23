@@ -266,13 +266,13 @@ def set_creation_date():
     fmt = "%Y-%m-%d %H:%M:%S"
     # c = datetime.datetime.fromtimestamp(created_at).strftime(fmt)
     # c = ' '.join(str(created_at).split('T'))
-    c = parser.parse(created_at)
+    c = parser.parse(created_at).isoformat(' ')
     print(c)
     # u = datetime.datetime.fromtimestamp(updated_at).strftime(fmt)
     # u = ' '.join(str(updated_at).split('T'))
-    u = parser.parse(updated_at)
+    u = parser.parse(updated_at).isoformat(' ')
     print(u)
-    sql = "UPDATE tickets SET ticket_created_at = STR_TO_DATE('%s', '%Y-%m-%d %H:%i:%s'), ticket_updated_at = STR_TO_DATE('%s', '%Y-%m-%d %H:%i:%s') WHERE ticket_id = %s"
+    sql = "UPDATE tickets SET ticket_created_at = CONVERT('%s', DATETIME), ticket_updated_at = CONVERT('%s', DATETIME) WHERE ticket_id = %s"
 
     cursor = conn.cursor()
     cursor.execute(sql, (created_at, updated_at, ticket_id))
