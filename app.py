@@ -63,8 +63,10 @@ def create_ticket_reply():
     )
 
     cursor = conn.cursor()
-    cursor.execute(
-        f"INSERT INTO ticket_replies SET ticket_reply = '{ticket_reply}', ticket_reply_type = '{ticket_reply_type}', ticket_reply_time_worked = '{ticket_reply_time_worked}', ticket_reply_by = {ticket_reply_by}, ticket_reply_ticket_id = {ticket_reply_ticket_id}")
+
+    sql = 'INSERT INTO ticket_replies (ticket_reply, ticket_reply_type, ticket_reply_time_worked, ticket_reply_by, ticket_reply_ticket_id) VALUES (%s, %s, %s, %s, %s)'
+
+    cursor.execute(sql, (ticket_reply, ticket_reply_type, ticket_reply_time_worked, ticket_reply_by, ticket_reply_ticket_id))
     conn.commit()
 
     row = cursor.fetchone()
@@ -210,6 +212,27 @@ def create_category():
     conn.close()
 
     return "done"
+
+@app.route('/ticket_resolve', methods=['POST'])
+def close_and_resolve():
+    # Request Body:
+    # {
+    #   ticket_id: 'ticket_id',
+    # }
+    json = request.json
+
+    ticket_id = json['ticket_id']
+
+    conn = mysql.connector.connect(
+        host=ITFLOW_DB_URI,
+        port=ITFLOW_DB_PORT,
+        user=ITFLOW_DB_USER,
+        password=ITFLOW_DB_PASSWORD,
+        database=ITFLOW_DB_NAME
+    )
+
+    cursor = conn.cursor()
+    cursor.execute('UPDATE tickets SET ticket_resolved_at = NOW(), ticket_closed_at = NOW() WHERE ticket_id = {ticket_id}')
 
 
 if __name__ == '__main__':
