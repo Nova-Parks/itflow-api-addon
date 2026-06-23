@@ -97,6 +97,8 @@ def set_ticket_status():
     conn.commit()
     conn.close()
 
+    return jsonify({'success': 'True'})
+
 
 @app.route('/ticket_statuses', methods=['GET'])
 def get_ticket_statuses():
