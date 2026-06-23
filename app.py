@@ -232,7 +232,7 @@ def close_and_resolve():
     )
 
     cursor = conn.cursor()
-    cursor.execute('UPDATE tickets SET ticket_resolved_at = NOW(), ticket_closed_at = NOW() WHERE ticket_id = {ticket_id}')
+    cursor.execute(f'UPDATE tickets SET ticket_resolved_at = NOW(), ticket_closed_at = NOW() WHERE ticket_id = {ticket_id}')
 
 
 if __name__ == '__main__':
