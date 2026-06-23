@@ -269,9 +269,9 @@ def set_creation_date():
         database=ITFLOW_DB_NAME
     )
     fmt = '%Y-%m-%d %H:%M:%S'
-    c = datetime.datetime.strptime(created_at, fmt).isoformat(' ')
+    c = ' '.join(str(created_at).split('T'))
     print(c)
-    u = datetime.datetime.strptime(updated_at, fmt).isoformat(' ')
+    u = ' '.join(str(updated_at).split('T'))
     print(u)
     sql = "UPDATE tickets SET ticket_created_at = '%s', ticket_updated_at = '%s' WHERE ticket_id = %s"
 
