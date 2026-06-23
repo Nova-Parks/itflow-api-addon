@@ -71,6 +71,7 @@ def create_ticket_reply():
     conn.close()
     return jsonify(row)
 
+
 @app.route('/ticket_statuses', methods=['POST'])
 def set_ticket_status():
     # Request Body:
@@ -85,7 +86,7 @@ def set_ticket_status():
 
     conn = mysql.connector.connect(
         host=ITFLOW_DB_URI,
-        post=ITFLOW_DB_PORT,
+        port=ITFLOW_DB_PORT,
         user=ITFLOW_DB_USER,
         password=ITFLOW_DB_PASSWORD,
         database=ITFLOW_DB_NAME
@@ -95,6 +96,7 @@ def set_ticket_status():
     cursor.execute(f'UPDATE tickets SET ticket_status = {status_id} WHERE ticket_id = {ticket_id}')
     conn.commit()
     conn.close()
+
 
 @app.route('/ticket_statuses', methods=['GET'])
 def get_ticket_statuses():
