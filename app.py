@@ -66,15 +66,9 @@ def create_ticket_reply():
 
     cursor = conn.cursor()
 
-    print(ticket_reply)
-    print(ticket_reply_by)
-    print(ticket_reply_ticket_id)
-    print(ticket_reply_type)
-
     sql = 'INSERT INTO ticket_replies (ticket_reply, ticket_reply_type, ticket_reply_time_worked, ticket_reply_by, ticket_reply_ticket_id) VALUES (%s, %s, %s, %s, %s)'
 
     cursor.execute(sql, (ticket_reply, ticket_reply_type, ticket_reply_time_worked, ticket_reply_by, ticket_reply_ticket_id))
-    print(cursor.statement)
     conn.commit()
 
     conn.close()
