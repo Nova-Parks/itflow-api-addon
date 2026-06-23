@@ -1,3 +1,4 @@
+import datetime
 import os
 import sys
 
@@ -262,7 +263,9 @@ def set_creation_date():
         password=ITFLOW_DB_PASSWORD,
         database=ITFLOW_DB_NAME
     )
-
+    fmt = '%Y-%m-%d %H:%M:%S'
+    c = datetime.datetime.strptime(created_at, fmt)
+    u = datetime.datetime.strptime(updated_at, fmt)
     sql = 'UPDATE tickets SET ticket_created_at = %s, ticket_updated_at = %s WHERE ticket_id = %s'
 
     cursor = conn.cursor()
