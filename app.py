@@ -73,11 +73,11 @@ def create_ticket_reply():
     sql = 'INSERT INTO ticket_replies (ticket_reply, ticket_reply_type, ticket_reply_time_worked, ticket_reply_by, ticket_reply_ticket_id) VALUES (%s, %s, %s, %s, %s)'
 
     cursor.execute(sql, (ticket_reply, ticket_reply_type, ticket_reply_time_worked, ticket_reply_by, ticket_reply_ticket_id))
+    print(cursor.statement)
     conn.commit()
 
-    row = cursor.fetchone()
     conn.close()
-    return jsonify(row)
+    return jsonify({'success': 'True'})
 
 
 @app.route('/ticket_statuses', methods=['POST'])
@@ -269,9 +269,11 @@ def set_creation_date():
         database=ITFLOW_DB_NAME
     )
     fmt = '%Y-%m-%d %H:%M:%S'
-    c = ' '.join(str(created_at).split('T'))
+    c = datetime.datetime.fromtimestamp(created_at)
+    # c = ' '.join(str(created_at).split('T'))
     print(c)
-    u = ' '.join(str(updated_at).split('T'))
+    u = datetime.datetime.fromtimestamp(updated_at)
+    # u = ' '.join(str(updated_at).split('T'))
     print(u)
     sql = "UPDATE tickets SET ticket_created_at = %s, ticket_updated_at = %s WHERE ticket_id = %s"
 
