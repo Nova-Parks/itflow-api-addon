@@ -191,8 +191,6 @@ def create_category():
     # }
     json = request.json
 
-    app.logger.info(f"request body: {json}")
-
     category = json['category']
     description = json['description']
     color = json['color']
