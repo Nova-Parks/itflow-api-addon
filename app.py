@@ -1,4 +1,5 @@
-import datetime
+from datetime import datetime
+from dateutil import parser
 import os
 import sys
 
@@ -268,12 +269,14 @@ def set_creation_date():
         password=ITFLOW_DB_PASSWORD,
         database=ITFLOW_DB_NAME
     )
-    fmt = '%Y-%m-%d %H:%M:%S'
-    c = datetime.datetime.fromtimestamp(created_at).strftime(fmt)
+    fmt = "%Y-%m-%d %H:%M:%S"
+    # c = datetime.datetime.fromtimestamp(created_at).strftime(fmt)
     # c = ' '.join(str(created_at).split('T'))
+    c = parser.parse(created_at)
     print(c)
-    u = datetime.datetime.fromtimestamp(updated_at).strftime(fmt)
+    # u = datetime.datetime.fromtimestamp(updated_at).strftime(fmt)
     # u = ' '.join(str(updated_at).split('T'))
+    u = parser.parse(updated_at)
     print(u)
     sql = "UPDATE tickets SET ticket_created_at = '%s', ticket_updated_at = '%s' WHERE ticket_id = '%s'"
 
